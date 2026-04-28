@@ -2,12 +2,27 @@
   "config": {
     "step": {
       "user": {
+        "title": "everHome EcoTracker",
+        "description": "Waehle, ob die Werte aus der everHome Cloud oder direkt aus dem lokalen EcoTracker gelesen werden sollen.",
+        "data": {
+          "source": "Datenquelle"
+        }
+      },
+      "cloud": {
         "title": "everHome Cloud verbinden",
         "description": "Lege in everHome unter Entwickler > Meine Anwendungen eine OAuth2-Anwendung an. Die Redirect-URI muss mit dem Wert unten identisch sein.",
         "data": {
           "client_id": "Client ID",
           "client_secret": "Client Secret",
           "redirect_uri": "Redirect URI",
+          "scan_interval": "Aktualisierungsintervall in Sekunden"
+        }
+      },
+      "local": {
+        "title": "EcoTracker lokal verbinden",
+        "description": "Gib die lokale IP-Adresse oder URL deines EcoTrackers ein. Der lokale HTTP-Server muss in der everHome App aktiviert sein.",
+        "data": {
+          "local_url": "EcoTracker IP oder URL",
           "scan_interval": "Aktualisierungsintervall in Sekunden"
         }
       },
@@ -20,13 +35,13 @@
       }
     },
     "error": {
-      "cannot_connect": "Verbindung zur everHome Cloud fehlgeschlagen.",
+      "cannot_connect": "Verbindung fehlgeschlagen. Pruefe Datenquelle, Adresse und Netzwerk.",
       "invalid_auth": "Authentifizierung fehlgeschlagen. Pruefe Code, Client ID, Client Secret und Redirect URI.",
       "invalid_scan_interval": "Das Intervall muss zwischen 5 und 3600 Sekunden liegen.",
       "unknown": "Unerwarteter Fehler."
     },
     "abort": {
-      "already_configured": "Dieses everHome Konto ist bereits konfiguriert."
+      "already_configured": "Diese Datenquelle ist bereits konfiguriert."
     }
   },
   "options": {
@@ -34,12 +49,23 @@
       "init": {
         "title": "everHome EcoTracker Optionen",
         "data": {
+          "source": "Datenquelle",
           "scan_interval": "Aktualisierungsintervall in Sekunden"
+        }
+      },
+      "local_options": {
+        "title": "Lokale EcoTracker-Verbindung",
+        "description": "Gib die lokale IP-Adresse oder URL deines EcoTrackers ein.",
+        "data": {
+          "local_url": "EcoTracker IP oder URL"
         }
       }
     },
     "error": {
-      "invalid_scan_interval": "Das Intervall muss zwischen 5 und 3600 Sekunden liegen."
+      "cannot_connect": "Verbindung zum lokalen EcoTracker fehlgeschlagen.",
+      "cloud_not_configured": "Dieser Eintrag wurde lokal angelegt und enthaelt keine Cloud-Zugangsdaten. Lege fuer Cloud-Nutzung einen neuen Cloud-Eintrag an.",
+      "invalid_scan_interval": "Das Intervall muss zwischen 5 und 3600 Sekunden liegen.",
+      "unknown": "Unerwarteter Fehler."
     }
   },
   "entity": {

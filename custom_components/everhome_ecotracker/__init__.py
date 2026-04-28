@@ -10,14 +10,18 @@ from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .api import EverHomeApi, EverHomeApiError
+from .api import EverHomeApiError, EverHomeCloudApi, EverHomeLocalApi
 from .const import (
     CONF_CLIENT_ID,
     CONF_CLIENT_SECRET,
+    CONF_LOCAL_URL,
     CONF_REDIRECT_URI,
+    CONF_SOURCE,
     CONF_TOKEN,
     DEFAULT_SCAN_INTERVAL_SECONDS,
     DOMAIN,
+    SOURCE_CLOUD,
+    SOURCE_LOCAL,
 )
 from .coordinator import EverHomeDataUpdateCoordinator
 
@@ -34,13 +38,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         )
 
     session = async_get_clientsession(hass)
-    api = EverHomeApi(
-        session=session,
-        client_id=entry.data[CONF_CLIENT_ID],
-        client_secret=entry.data[CONF_CLIENT_SECRET],
-        token=dict(entry.data[CONF_TOKEN]),
-        token_updater=async_update_token,
-    )
+    source = entry.options.get(CONF_SOURCE, entry.data.get(CONF_SOURCE, SOURCE_CLOUD))
+    if source == SOURCE_LOCAL:
+        api = EverHomeLocalApi(
+            session=session,
+            local_url=entry.options.get(CONF_LOCAL_URL, entry.data[CONF_LOCAL_URL]),
+        )
+    else:
+        api = EverHomeCloudApi(
+            session=session,
+            client_id=entry.data[CONF_CLIENT_ID],
+            client_secret=entry.data[CONF_CLIENT_SECRET],
+            token=dict(entry.data[CONF_TOKEN]),
+            token_updater=async_update_token,
+        )
 
     scan_interval_seconds = entry.options.get(
         CONF_SCAN_INTERVAL,
@@ -58,6 +69,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         raise ConfigEntryNotReady from err
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
+    entry.async_on_unload(entry.add_update_listener(async_update_options))
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 
@@ -74,3 +86,8 @@ async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Reload an everHome EcoTracker config entry."""
     await async_unload_entry(hass, entry)
     await async_setup_entry(hass, entry)
+
+
+async def async_update_options(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    """Reload the config entry when options change."""
+    await hass.config_entries.async_reload(entry.entry_id)

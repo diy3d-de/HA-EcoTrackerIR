@@ -1,6 +1,6 @@
 # everHome EcoTracker fuer Home Assistant
 
-Custom Integration, um EcoTracker-Daten aus der everHome Cloud in Home Assistant als Sensoren bereitzustellen.
+Custom Integration, um EcoTracker-Daten aus der everHome Cloud oder direkt ueber die lokale EcoTracker-API in Home Assistant als Sensoren bereitzustellen.
 
 ## One-Click-Installation fuer HassOS
 
@@ -30,6 +30,17 @@ Quellen:
 - everHome Cloud-API: <https://everhome.cloud/de/entwickler>
 - everHome EcoTracker lokale API: <https://everhome.cloud/de/entwickler/ecotracker>
 
+## Datenquelle waehlen
+
+Beim Hinzufuegen der Integration kannst du zwischen zwei Datenquellen waehlen:
+
+- `everHome Cloud`: nutzt die dokumentierte everHome Cloud-API mit OAuth2.
+- `EcoTracker lokal`: liest direkt `http://<EcoTracker-IP>/v1/json`.
+
+Fuer den lokalen Modus muss der lokale HTTP-Server in der everHome App aktiviert sein. Laut everHome ist diese Option standardmaessig eingeschaltet. Du kannst als Adresse entweder nur die IP, z. B. `192.168.1.50`, oder die komplette URL `http://192.168.1.50/v1/json` eintragen.
+
+In den Integrationsoptionen kannst du das Aktualisierungsintervall aendern. Ein Cloud-Eintrag kann dort auch auf lokale Daten umgestellt und spaeter wieder zurueck auf Cloud gesetzt werden.
+
 ## Manuelle Installation
 
 1. Kopiere den Ordner `custom_components/everhome_ecotracker` nach `custom_components` deiner Home-Assistant-Installation.
@@ -49,7 +60,9 @@ Beim Einrichten in Home Assistant zeigt die Integration eine everHome-Login-URL.
 
 ## Sensoren
 
-Die Integration ruft `https://everhome.cloud/device?include=properties` ab und erzeugt Sensoren fuer alle numerischen Werte in `states` und `properties`.
+Die Integration erzeugt Sensoren fuer alle numerischen Werte aus der gewaehlten Quelle.
+
+Im Cloud-Modus ruft sie `https://everhome.cloud/device?include=properties` ab. Im lokalen Modus ruft sie `http://<EcoTracker-IP>/v1/json` ab.
 
 Das Standard-Intervall ist auf 5 Sekunden gesetzt. Das ist die schnellste sinnvolle Nahe-Echtzeit-Aktualisierung fuer die dokumentierte everHome Cloud-REST-API.
 
@@ -74,6 +87,6 @@ entities:
 
 Die konkreten Entity-IDs koennen je nach Geraetename abweichen.
 
-## Lokale Alternative
+## Hinweis zum Wechsel Cloud/Lokal
 
-Der EcoTracker bietet auch eine lokale REST-API unter `http://<EcoTracker-IP>/v1/json`, wenn der lokale HTTP-Server in der everHome-App aktiv ist. Diese Integration ist bewusst fuer die Cloud-API gebaut, weil sie keine lokale Erreichbarkeit des EcoTrackers voraussetzt.
+Wenn du die Integration direkt im lokalen Modus anlegst, werden keine Cloud-Zugangsdaten gespeichert. Fuer die Cloud-Nutzung legst du in diesem Fall einen zweiten Eintrag im Cloud-Modus an.

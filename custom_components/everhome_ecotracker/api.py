@@ -1,4 +1,4 @@
-"""Client for the everHome cloud API."""
+"""Clients for the everHome cloud and EcoTracker local APIs."""
 
 from __future__ import annotations
 
@@ -7,6 +7,7 @@ import time
 from typing import Any
 
 from aiohttp import ClientError, ClientResponse, ClientSession
+from yarl import URL
 
 from .const import API_BASE_URL, AUTHORIZE_URL, TOKEN_URL
 
@@ -21,7 +22,7 @@ class EverHomeApiAuthError(EverHomeApiError):
     """Authentication failed or token refresh failed."""
 
 
-class EverHomeApi:
+class EverHomeCloudApi:
     """Small async everHome cloud API wrapper."""
 
     def __init__(
@@ -152,7 +153,7 @@ class EverHomeApi:
             raise EverHomeApiError("Could not connect to everHome OAuth endpoint") from err
 
         async with response:
-            await EverHomeApi._raise_for_status(response)
+            await EverHomeCloudApi._raise_for_status(response)
             token = await response.json(content_type=None)
 
         if "access_token" not in token:
@@ -171,3 +172,64 @@ class EverHomeApi:
         if response.status in (400, 401, 403):
             raise EverHomeApiAuthError(text)
         raise EverHomeApiError(f"everHome API returned HTTP {response.status}: {text}")
+
+
+class EverHomeLocalApi:
+    """Small async client for the EcoTracker local REST API."""
+
+    def __init__(self, session: ClientSession, local_url: str) -> None:
+        """Initialize the local API client."""
+        self._session = session
+        self._local_url = _normalize_local_url(local_url)
+
+    @staticmethod
+    def local_id(local_url: str) -> str:
+        """Return a stable id for a local EcoTracker URL."""
+        url = _normalize_local_url(local_url)
+        return url.host or url.human_repr()
+
+    async def async_get_devices(self) -> list[dict[str, Any]]:
+        """Return local EcoTracker data as a one-device list."""
+        try:
+            response = await self._session.get(self._local_url, headers={"Accept": "application/json"})
+        except ClientError as err:
+            raise EverHomeApiError("Could not connect to local EcoTracker") from err
+
+        async with response:
+            await self._raise_for_status(response)
+            data = await response.json(content_type=None)
+
+        if not isinstance(data, dict):
+            raise EverHomeApiError("EcoTracker local API did not return a JSON object")
+
+        return [
+            {
+                "id": self._local_url.host or self._local_url.human_repr(),
+                "name": "EcoTracker Lokal",
+                "states": data,
+            }
+        ]
+
+    @staticmethod
+    async def _raise_for_status(response: ClientResponse) -> None:
+        """Translate HTTP errors to integration exceptions."""
+        if response.status < 400:
+            return
+
+        text = await response.text()
+        raise EverHomeApiError(f"EcoTracker local API returned HTTP {response.status}: {text}")
+
+
+EverHomeApi = EverHomeCloudApi
+
+
+def _normalize_local_url(local_url: str) -> URL:
+    """Normalize a host or URL to the EcoTracker local JSON endpoint."""
+    value = local_url.strip()
+    if "://" not in value:
+        value = f"http://{value}"
+
+    url = URL(value)
+    if not url.path or url.path == "/":
+        url = url.with_path("/v1/json")
+    return url
