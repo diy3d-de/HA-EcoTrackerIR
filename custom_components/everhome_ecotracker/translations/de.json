@@ -1,0 +1,76 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "everHome Cloud verbinden",
+        "description": "Lege in everHome unter Entwickler > Meine Anwendungen eine OAuth2-Anwendung an. Die Redirect-URI muss mit dem Wert unten identisch sein.",
+        "data": {
+          "client_id": "Client ID",
+          "client_secret": "Client Secret",
+          "redirect_uri": "Redirect URI",
+          "scan_interval": "Aktualisierungsintervall in Sekunden"
+        }
+      },
+      "authorize": {
+        "title": "everHome Anmeldung",
+        "description": "Oeffne diese URL, melde dich bei everHome mit E-Mail-Adresse und Passwort an und erlaube den Zugriff. Kopiere danach den Parameter `code` aus der weitergeleiteten URL hier hinein.\n\n{authorization_url}",
+        "data": {
+          "authorization_code": "Authorization Code"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zur everHome Cloud fehlgeschlagen.",
+      "invalid_auth": "Authentifizierung fehlgeschlagen. Pruefe Code, Client ID, Client Secret und Redirect URI.",
+      "invalid_scan_interval": "Das Intervall muss zwischen 5 und 3600 Sekunden liegen.",
+      "unknown": "Unerwarteter Fehler."
+    },
+    "abort": {
+      "already_configured": "Dieses everHome Konto ist bereits konfiguriert."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "everHome EcoTracker Optionen",
+        "data": {
+          "scan_interval": "Aktualisierungsintervall in Sekunden"
+        }
+      }
+    },
+    "error": {
+      "invalid_scan_interval": "Das Intervall muss zwischen 5 und 3600 Sekunden liegen."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "power": {
+        "name": "Leistung"
+      },
+      "power_avg": {
+        "name": "Leistung Durchschnitt"
+      },
+      "power_phase_1": {
+        "name": "Leistung Phase 1"
+      },
+      "power_phase_2": {
+        "name": "Leistung Phase 2"
+      },
+      "power_phase_3": {
+        "name": "Leistung Phase 3"
+      },
+      "energy_counter_in": {
+        "name": "Zaehlerstand Bezug"
+      },
+      "energy_counter_in_t1": {
+        "name": "Zaehlerstand Bezug Tarif 1"
+      },
+      "energy_counter_in_t2": {
+        "name": "Zaehlerstand Bezug Tarif 2"
+      },
+      "energy_counter_out": {
+        "name": "Zaehlerstand Einspeisung"
+      }
+    }
+  }
+}
