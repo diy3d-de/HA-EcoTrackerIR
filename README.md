@@ -51,6 +51,8 @@ Beim Einrichten in Home Assistant zeigt die Integration eine everHome-Login-URL.
 
 Die Integration ruft `https://everhome.cloud/device?include=properties` ab und erzeugt Sensoren fuer alle numerischen Werte in `states` und `properties`.
 
+Das Standard-Intervall ist auf 5 Sekunden gesetzt. Das ist die schnellste sinnvolle Nahe-Echtzeit-Aktualisierung fuer die dokumentierte everHome Cloud-REST-API.
+
 Bekannte EcoTracker-Werte werden passend klassifiziert:
 
 - Leistung in Watt: `power`, `powerAvg`, `powerPhase1`, `powerPhase2`, `powerPhase3`
