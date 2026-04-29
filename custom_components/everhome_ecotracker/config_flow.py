@@ -181,7 +181,7 @@ class EverHomeConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     )
                     self._abort_if_unique_id_configured()
                     return self.async_create_entry(
-                        title="EcoTracker Lokal",
+                        title="EcoTracker lokal (inoffiziell)",
                         data={**user_input, CONF_SOURCE: SOURCE_LOCAL},
                     )
 
@@ -226,7 +226,7 @@ class EverHomeConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 await self.async_set_unique_id(str(token.get("userid", "everhome")))
                 self._abort_if_unique_id_configured()
                 return self.async_create_entry(
-                    title="everHome EcoTracker",
+                    title="everHome EcoTracker Cloud (inoffiziell)",
                     data={**self._connection_data, CONF_TOKEN: token},
                 )
 

@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "everHome EcoTracker",
+        "title": "everHome EcoTracker (inoffiziell)",
         "description": "Waehle, ob die Werte aus der everHome Cloud oder direkt aus dem lokalen EcoTracker gelesen werden sollen.",
         "data": {
           "source": "Datenquelle"
@@ -47,7 +47,7 @@
   "options": {
     "step": {
       "init": {
-        "title": "everHome EcoTracker Optionen",
+        "title": "everHome EcoTracker Optionen (inoffiziell)",
         "data": {
           "source": "Datenquelle",
           "scan_interval": "Aktualisierungsintervall in Sekunden"

@@ -1,6 +1,8 @@
 # everHome EcoTracker fuer Home Assistant
 
-Custom Integration, um EcoTracker-Daten aus der everHome Cloud oder direkt ueber die lokale EcoTracker-API in Home Assistant als Sensoren bereitzustellen.
+Inoffizielle Custom Integration, um EcoTracker-Daten aus der everHome Cloud oder direkt ueber die lokale EcoTracker-API in Home Assistant als Sensoren bereitzustellen.
+
+Dies ist keine offizielle Integration von everHome und keine offizielle Home-Assistant-Core-Integration.
 
 ## One-Click-Installation fuer HassOS
 
@@ -69,7 +71,7 @@ Das Standard-Intervall ist auf 5 Sekunden gesetzt. Das ist die schnellste sinnvo
 Bekannte EcoTracker-Werte werden passend klassifiziert:
 
 - Leistung in Watt: `power`, `powerAvg`, `powerPhase1`, `powerPhase2`, `powerPhase3`
-- Zaehlerstaende in kWh: `energyCounterIn`, `energyCounterInT1`, `energyCounterInT2`, `energyCounterOut`
+- Zaehlerstaende in kWh: `energyCounterIn`, `energyCounterInT1`, `energyCounterInT2`, `energyCounterOut`, `energyCounterIOut`
 
 Die everHome-Dokumentation beschreibt EcoTracker-Zaehlerstaende als Wh. Die Integration wandelt diese Werte fuer Home Assistant in kWh um.
 

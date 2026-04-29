@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Callable
+import json
+import re
 import time
 from typing import Any
 
@@ -197,15 +199,16 @@ class EverHomeLocalApi:
 
         async with response:
             await self._raise_for_status(response)
-            data = await response.json(content_type=None)
+            data = await _async_read_local_json(response)
 
+        data = _extract_local_payload(data)
         if not isinstance(data, dict):
-            raise EverHomeApiError("EcoTracker local API did not return a JSON object")
+            raise EverHomeApiError("EcoTracker local API did not return sensor values")
 
         return [
             {
                 "id": self._local_url.host or self._local_url.human_repr(),
-                "name": "EcoTracker Lokal",
+                "name": "EcoTracker lokal",
                 "states": data,
             }
         ]
@@ -233,3 +236,38 @@ def _normalize_local_url(local_url: str) -> URL:
     if not url.path or url.path == "/":
         url = url.with_path("/v1/json")
     return url
+
+
+async def _async_read_local_json(response: ClientResponse) -> Any:
+    """Read local EcoTracker JSON, accepting a few common firmware quirks."""
+    text = (await response.text()).strip()
+    if not text:
+        raise EverHomeApiError("EcoTracker local API returned an empty response")
+
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        # Some examples in the vendor docs contain trailing commas; tolerate that
+        # shape in case a firmware emits it as well.
+        cleaned = re.sub(r",\s*([}\]])", r"\1", text)
+        try:
+            return json.loads(cleaned)
+        except json.JSONDecodeError as err:
+            raise EverHomeApiError("EcoTracker local API returned invalid JSON") from err
+
+
+def _extract_local_payload(data: Any) -> Any:
+    """Extract sensor values from known local response envelopes."""
+    if isinstance(data, dict):
+        for key in ("data", "values", "states"):
+            nested = data.get(key)
+            if isinstance(nested, dict):
+                return nested
+        return data
+
+    if isinstance(data, list):
+        for item in data:
+            if isinstance(item, dict):
+                return _extract_local_payload(item)
+
+    return data

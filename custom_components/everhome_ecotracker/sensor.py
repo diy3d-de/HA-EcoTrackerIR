@@ -98,6 +98,14 @@ SENSOR_DESCRIPTIONS: dict[str, EverHomeSensorDescription] = {
         state_class=SensorStateClass.TOTAL_INCREASING,
         scale=0.001,
     ),
+    "energyCounterIOut": EverHomeSensorDescription(
+        key="energyCounterIOut",
+        translation_key="energy_counter_out",
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        scale=0.001,
+    ),
 }
 
 

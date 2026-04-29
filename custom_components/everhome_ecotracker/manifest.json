@@ -1,11 +1,11 @@
 {
   "domain": "everhome_ecotracker",
-  "name": "everHome EcoTracker",
+  "name": "everHome EcoTracker (inoffiziell)",
   "codeowners": [],
   "config_flow": true,
   "documentation": "https://github.com/diy3d-de/HA-EcoTrackerIR",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/diy3d-de/HA-EcoTrackerIR/issues",
   "requirements": [],
-  "version": "0.2.0"
+  "version": "0.2.1"
 }

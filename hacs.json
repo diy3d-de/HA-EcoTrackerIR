@@ -1,4 +1,5 @@
 {
-  "name": "everHome EcoTracker",
+  "name": "everHome EcoTracker (inoffiziell)",
+  "description": "Inoffizielle Home-Assistant-Integration fuer everHome EcoTracker.",
   "render_readme": true
 }
