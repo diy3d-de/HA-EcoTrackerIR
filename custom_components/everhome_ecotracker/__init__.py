@@ -40,9 +40,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     session = async_get_clientsession(hass)
     source = entry.options.get(CONF_SOURCE, entry.data.get(CONF_SOURCE, SOURCE_CLOUD))
     if source == SOURCE_LOCAL:
+        local_url = entry.options.get(CONF_LOCAL_URL) or entry.data.get(CONF_LOCAL_URL)
+        if not local_url:
+            raise ConfigEntryNotReady("Local EcoTracker URL is missing")
         api = EverHomeLocalApi(
             session=session,
-            local_url=entry.options.get(CONF_LOCAL_URL, entry.data[CONF_LOCAL_URL]),
+            local_url=local_url,
         )
     else:
         api = EverHomeCloudApi(
