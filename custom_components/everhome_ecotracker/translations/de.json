@@ -37,7 +37,7 @@
     "error": {
       "cannot_connect": "Verbindung fehlgeschlagen. Pruefe Datenquelle, Adresse und Netzwerk.",
       "invalid_auth": "Authentifizierung fehlgeschlagen. Pruefe Code, Client ID, Client Secret und Redirect URI.",
-      "invalid_scan_interval": "Das Intervall muss zwischen 5 und 3600 Sekunden liegen.",
+      "invalid_scan_interval": "Das Intervall muss lokal zwischen 1 und 3600 Sekunden und in der Cloud zwischen 5 und 3600 Sekunden liegen.",
       "unknown": "Unerwarteter Fehler."
     },
     "abort": {
@@ -64,7 +64,7 @@
     "error": {
       "cannot_connect": "Verbindung zum lokalen EcoTracker fehlgeschlagen.",
       "cloud_not_configured": "Dieser Eintrag wurde lokal angelegt und enthaelt keine Cloud-Zugangsdaten. Lege fuer Cloud-Nutzung einen neuen Cloud-Eintrag an.",
-      "invalid_scan_interval": "Das Intervall muss zwischen 5 und 3600 Sekunden liegen.",
+      "invalid_scan_interval": "Das Intervall muss lokal zwischen 1 und 3600 Sekunden und in der Cloud zwischen 5 und 3600 Sekunden liegen.",
       "unknown": "Unerwarteter Fehler."
     }
   },

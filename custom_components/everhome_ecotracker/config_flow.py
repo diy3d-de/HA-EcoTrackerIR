@@ -23,10 +23,12 @@ from .const import (
     CONF_REDIRECT_URI,
     CONF_SOURCE,
     CONF_TOKEN,
+    DEFAULT_LOCAL_SCAN_INTERVAL_SECONDS,
     DEFAULT_REDIRECT_URI,
     DEFAULT_SCAN_INTERVAL_SECONDS,
     DOMAIN,
     MAX_SCAN_INTERVAL_SECONDS,
+    MIN_LOCAL_SCAN_INTERVAL_SECONDS,
     MIN_SCAN_INTERVAL_SECONDS,
     SOURCE_CLOUD,
     SOURCE_LOCAL,
@@ -72,7 +74,7 @@ def _cloud_schema(defaults: dict[str, Any] | None = None) -> vol.Schema:
             ): str,
             vol.Optional(
                 CONF_SCAN_INTERVAL,
-                default=defaults.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL_SECONDS),
+                default=defaults.get(CONF_SCAN_INTERVAL, DEFAULT_LOCAL_SCAN_INTERVAL_SECONDS),
             ): int,
         }
     )
@@ -165,7 +167,7 @@ class EverHomeConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             scan_interval = user_input[CONF_SCAN_INTERVAL]
-            if not MIN_SCAN_INTERVAL_SECONDS <= scan_interval <= MAX_SCAN_INTERVAL_SECONDS:
+            if not MIN_LOCAL_SCAN_INTERVAL_SECONDS <= scan_interval <= MAX_SCAN_INTERVAL_SECONDS:
                 errors[CONF_SCAN_INTERVAL] = "invalid_scan_interval"
             else:
                 try:
@@ -311,7 +313,12 @@ class EverHomeOptionsFlow(config_entries.OptionsFlow):
 
         if user_input is not None:
             scan_interval = user_input[CONF_SCAN_INTERVAL]
-            if not MIN_SCAN_INTERVAL_SECONDS <= scan_interval <= MAX_SCAN_INTERVAL_SECONDS:
+            min_interval = (
+                MIN_LOCAL_SCAN_INTERVAL_SECONDS
+                if user_input[CONF_SOURCE] == SOURCE_LOCAL
+                else MIN_SCAN_INTERVAL_SECONDS
+            )
+            if not min_interval <= scan_interval <= MAX_SCAN_INTERVAL_SECONDS:
                 errors[CONF_SCAN_INTERVAL] = "invalid_scan_interval"
             elif user_input[CONF_SOURCE] == SOURCE_LOCAL:
                 self._options_data = user_input

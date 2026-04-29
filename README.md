@@ -66,7 +66,7 @@ Die Integration erzeugt Sensoren fuer alle numerischen Werte aus der gewaehlten 
 
 Im Cloud-Modus ruft sie `https://everhome.cloud/device?include=properties` ab. Im lokalen Modus ruft sie `http://<EcoTracker-IP>/v1/json` ab.
 
-Das Standard-Intervall ist auf 5 Sekunden gesetzt. Das ist die schnellste sinnvolle Nahe-Echtzeit-Aktualisierung fuer die dokumentierte everHome Cloud-REST-API.
+Das Standard-Intervall ist im Cloud-Modus auf 5 Sekunden gesetzt. Im lokalen Modus ist ein 1-Sekunden-Intervall moeglich und standardmaessig aktiv, damit die Werte so nah wie moeglich in Echtzeit aktualisiert werden.
 
 Bekannte EcoTracker-Werte werden passend klassifiziert:
 
