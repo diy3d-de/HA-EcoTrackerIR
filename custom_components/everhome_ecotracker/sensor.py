@@ -148,7 +148,7 @@ class EverHomeSensor(CoordinatorEntity[EverHomeDataUpdateCoordinator], SensorEnt
         """Initialize the sensor."""
         super().__init__(coordinator)
         self._device_id = str(device["id"])
-        self._device_name = str(device.get("name") or f"everHome {self._device_id}")
+        self._device_name = str(device.get("name") or f"EcoTracker {self._device_id}")
         self._metric = metric
         self._source = metric["source"]
         self._key = metric["key"]
@@ -168,7 +168,7 @@ class EverHomeSensor(CoordinatorEntity[EverHomeDataUpdateCoordinator], SensorEnt
         """Return device registry information."""
         return DeviceInfo(
             identifiers={(DOMAIN, self._device_id)},
-            manufacturer="everHome",
+            manufacturer="Christian Laux",
             name=self._device_name,
         )
 

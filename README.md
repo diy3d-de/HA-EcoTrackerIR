@@ -1,8 +1,6 @@
-# everHome EcoTracker fuer Home Assistant
+# Christian Laux EcoTracker fuer Home Assistant
 
-Inoffizielle Custom Integration, um EcoTracker-Daten aus der everHome Cloud oder direkt ueber die lokale EcoTracker-API in Home Assistant als Sensoren bereitzustellen.
-
-Dies ist keine offizielle Integration von everHome und keine offizielle Home-Assistant-Core-Integration.
+Custom Integration von Christian Laux, um EcoTracker-Daten aus der Cloud oder direkt ueber die lokale EcoTracker-API in Home Assistant als Sensoren bereitzustellen.
 
 ## One-Click-Installation fuer HassOS
 
@@ -25,21 +23,21 @@ Falls HACS noch nicht installiert ist, installiere zuerst HACS fuer Home Assista
 
 ## Warum OAuth statt direkter Passwort-Eingabe?
 
-everHome dokumentiert fuer die Cloud-API OAuth2. Die Anmeldung mit E-Mail-Adresse und Passwort passiert auf der everHome-Webseite im OAuth-Login. Die Integration speichert danach nur OAuth-Tokens, nicht dein everHome-Passwort.
+Die Cloud-API nutzt OAuth2. Die Anmeldung mit E-Mail-Adresse und Passwort passiert auf der Anbieter-Webseite im OAuth-Login. Diese Erweiterung speichert danach nur OAuth-Tokens, nicht dein Passwort.
 
 Quellen:
 
-- everHome Cloud-API: <https://everhome.cloud/de/entwickler>
-- everHome EcoTracker lokale API: <https://everhome.cloud/de/entwickler/ecotracker>
+- Cloud-API: <https://everhome.cloud/de/entwickler>
+- EcoTracker lokale API: <https://everhome.cloud/de/entwickler/ecotracker>
 
 ## Datenquelle waehlen
 
 Beim Hinzufuegen der Integration kannst du zwischen zwei Datenquellen waehlen:
 
-- `everHome Cloud`: nutzt die dokumentierte everHome Cloud-API mit OAuth2.
+- `Cloud`: nutzt die dokumentierte Cloud-API mit OAuth2.
 - `EcoTracker lokal`: liest direkt `http://<EcoTracker-IP>/v1/json`.
 
-Fuer den lokalen Modus muss der lokale HTTP-Server in der everHome App aktiviert sein. Laut everHome ist diese Option standardmaessig eingeschaltet. Du kannst als Adresse entweder nur die IP, z. B. `192.168.1.50`, oder die komplette URL `http://192.168.1.50/v1/json` eintragen.
+Fuer den lokalen Modus muss der lokale HTTP-Server in der App des Anbieters aktiviert sein. Laut Hersteller ist diese Option standardmaessig eingeschaltet. Du kannst als Adresse entweder nur die IP, z. B. `192.168.1.50`, oder die komplette URL `http://192.168.1.50/v1/json` eintragen.
 
 In den Integrationsoptionen kannst du das Aktualisierungsintervall aendern. Ein Cloud-Eintrag kann dort auch auf lokale Daten umgestellt und spaeter wieder zurueck auf Cloud gesetzt werden.
 
@@ -48,9 +46,9 @@ In den Integrationsoptionen kannst du das Aktualisierungsintervall aendern. Ein 
 1. Kopiere den Ordner `custom_components/everhome_ecotracker` nach `custom_components` deiner Home-Assistant-Installation.
 2. Starte Home Assistant neu.
 3. Oeffne `Einstellungen > Geraete & Dienste > Integration hinzufuegen`.
-4. Suche nach `everHome EcoTracker`.
+4. Suche nach `Christian Laux EcoTracker`.
 
-## everHome OAuth-Anwendung anlegen
+## OAuth-Anwendung anlegen
 
 1. Oeffne <https://everhome.cloud/de/entwickler>.
 2. Melde dich an.
@@ -58,7 +56,7 @@ In den Integrationsoptionen kannst du das Aktualisierungsintervall aendern. Ein 
 4. Verwende als Redirect URI z. B. `http://localhost:12345`.
 5. Notiere `Client ID` und `Client Secret`.
 
-Beim Einrichten in Home Assistant zeigt die Integration eine everHome-Login-URL. Oeffne sie, melde dich mit E-Mail-Adresse und Passwort an und erlaube den Zugriff. Danach wirst du auf die Redirect URI weitergeleitet. Auch wenn der Browser dort eine Fehlerseite zeigt: In der Adresszeile steht `?code=...`. Diesen Code kopierst du in Home Assistant.
+Beim Einrichten in Home Assistant zeigt die Integration eine Cloud-Login-URL. Oeffne sie, melde dich mit E-Mail-Adresse und Passwort an und erlaube den Zugriff. Danach wirst du auf die Redirect URI weitergeleitet. Auch wenn der Browser dort eine Fehlerseite zeigt: In der Adresszeile steht `?code=...`. Diesen Code kopierst du in Home Assistant.
 
 ## Sensoren
 
@@ -73,7 +71,7 @@ Bekannte EcoTracker-Werte werden passend klassifiziert:
 - Leistung in Watt: `power`, `powerAvg`, `powerPhase1`, `powerPhase2`, `powerPhase3`
 - Zaehlerstaende in kWh: `energyCounterIn`, `energyCounterInT1`, `energyCounterInT2`, `energyCounterOut`, `energyCounterIOut`
 
-Die everHome-Dokumentation beschreibt EcoTracker-Zaehlerstaende als Wh. Die Integration wandelt diese Werte fuer Home Assistant in kWh um.
+Die Herstellerdokumentation beschreibt EcoTracker-Zaehlerstaende als Wh. Die Integration wandelt diese Werte fuer Home Assistant in kWh um.
 
 ## Dashboard-Beispiel
 

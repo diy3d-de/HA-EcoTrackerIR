@@ -8,7 +8,7 @@ Nutze diese Datei, wenn du nur ueber die Home-Assistant-Oberflaeche installieren
 
 Nach der HACS-Installation Home Assistant neu starten und HACS einmal einrichten.
 
-## 2. everHome EcoTracker Repository in HACS oeffnen
+## 2. Christian Laux EcoTracker Repository in HACS oeffnen
 
 [![Repository in HACS oeffnen](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?category=integration&owner=diy3d-de&repository=HA-EcoTrackerIR)
 

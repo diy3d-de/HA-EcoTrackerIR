@@ -1,5 +1,5 @@
 {
-  "name": "everHome EcoTracker (inoffiziell)",
-  "description": "Inoffizielle Home-Assistant-Integration fuer everHome EcoTracker.",
+  "name": "Christian Laux EcoTracker",
+  "description": "Home-Assistant-Integration von Christian Laux fuer EcoTracker-Daten.",
   "render_readme": true
 }

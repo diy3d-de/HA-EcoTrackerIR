@@ -2,14 +2,14 @@
   "config": {
     "step": {
       "user": {
-        "title": "everHome EcoTracker (inoffiziell)",
-        "description": "Waehle, ob die Werte aus der everHome Cloud oder direkt aus dem lokalen EcoTracker gelesen werden sollen.",
+        "title": "Christian Laux EcoTracker",
+        "description": "Waehle, ob die Werte aus der Cloud oder direkt aus dem lokalen EcoTracker gelesen werden sollen.",
         "data": {
           "source": "Datenquelle"
         }
       },
       "cloud": {
-        "title": "everHome Cloud verbinden",
+        "title": "Cloud verbinden",
         "description": "Lege in everHome unter Entwickler > Meine Anwendungen eine OAuth2-Anwendung an. Die Redirect-URI muss mit dem Wert unten identisch sein.",
         "data": {
           "client_id": "Client ID",
@@ -20,14 +20,14 @@
       },
       "local": {
         "title": "EcoTracker lokal verbinden",
-        "description": "Gib die lokale IP-Adresse oder URL deines EcoTrackers ein. Der lokale HTTP-Server muss in der everHome App aktiviert sein.",
+        "description": "Gib die lokale IP-Adresse oder URL deines EcoTrackers ein. Der lokale HTTP-Server muss in der App des Anbieters aktiviert sein.",
         "data": {
           "local_url": "EcoTracker IP oder URL",
           "scan_interval": "Aktualisierungsintervall in Sekunden"
         }
       },
       "authorize": {
-        "title": "everHome Anmeldung",
+        "title": "Cloud Anmeldung",
         "description": "Oeffne diese URL, melde dich bei everHome mit E-Mail-Adresse und Passwort an und erlaube den Zugriff. Kopiere danach den Parameter `code` aus der weitergeleiteten URL hier hinein.\n\n{authorization_url}",
         "data": {
           "authorization_code": "Authorization Code"
@@ -47,7 +47,7 @@
   "options": {
     "step": {
       "init": {
-        "title": "everHome EcoTracker Optionen (inoffiziell)",
+        "title": "Christian Laux EcoTracker Optionen",
         "data": {
           "source": "Datenquelle",
           "scan_interval": "Aktualisierungsintervall in Sekunden"
